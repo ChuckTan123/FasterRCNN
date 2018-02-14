@@ -266,7 +266,7 @@ def draw_all_detection(im_array, detections, class_names, scale):
     color_white = (255, 255, 255)
     im = image.transform_inverse(im_array, config.PIXEL_MEANS)
     # change to bgr
-    im = cv2.cvtColor(im, cv2.cv.CV_RGB2BGR)
+    im = cv2.cvtColor(im, cv2.COLOR_RGB2BGR)
     for j, name in enumerate(class_names):
         if name == '__background__':
             continue
