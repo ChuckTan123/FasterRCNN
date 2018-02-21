@@ -6,15 +6,8 @@ import cv2
 import os
 import numpy as np
 
-import logging
-
-# set up logger
-logging.basicConfig()
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-
-# from ..logger import logger
-from imdb import IMDB
+from ..logger import logger
+from .imdb import IMDB
 from .pascal_voc_eval import voc_eval
 from .ds_utils import unique_boxes, filter_small_boxes
 
@@ -28,9 +21,7 @@ class Cat(IMDB):
         :param devkit_path: data and results
         :return: imdb object
         """
-        year, image_set = image_set.split('_')
-        super(Cat, self).__init__("cat", image_set, root_path)  # set self.name
-        self.year = year
+        super(Cat, self).__init__("cat", image_set, root_path, data_path)  # set self.name
         self.root_path = root_path
         self.data_path = data_path
 
@@ -54,8 +45,9 @@ class Cat(IMDB):
         assert os.path.exists(image_set_index_file), 'Path does not exist: {}'.format(image_set_index_file)
         with open(image_set_index_file) as f:
             image_set_index = [x.strip() for x in f.readlines()]
+        
         return image_set_index
 
 if __name__ == "__main__":
-    cat = Cat("Cat", "cat/")
+    cat = Cat("Cat", "rcnn/dataset/cat/", "rcnn/dataset/cat/")
     print cat

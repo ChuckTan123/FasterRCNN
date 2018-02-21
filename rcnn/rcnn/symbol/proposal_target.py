@@ -25,7 +25,7 @@ import numpy as np
 from distutils.util import strtobool
 
 from ..logger import logger
-from rcnn.io.rcnn import sample_rois
+from rcnn.iorpn.rcnn import sample_rois
 
 
 class ProposalTargetOperator(mx.operator.CustomOp):
