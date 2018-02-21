@@ -10,7 +10,7 @@ from ..logger import logger
 from .imdb import IMDB
 from .pascal_voc_eval import voc_eval
 from .ds_utils import unique_boxes, filter_small_boxes
-
+import json
 
 class Cat(IMDB):
     def __init__(self, image_set, root_path, data_path):
@@ -58,9 +58,52 @@ class Cat(IMDB):
         assert os.path.exists(image_file), 'Path does not exist: {}'.format(image_file)
         return image_file
 
+    def gt_roidb(self):
+        """
+        return ground truth image regions database
+        :return: imdb[image_index]['boxes', 'gt_classes', 'gt_overlaps', 'flipped']
+        """
+        def load_roi(key, gt_f):
+            objs = gt_f[key]
+            roi_rec = dict()
+            roi_rec['image'] = self.image_path_from_index(index)
+            size = cv2.imread(roi_rec['image']).shape
+            roi_rec['height'] = size[0]
+            roi_rec['width'] = size[1]
+            num_objs = len(objs)
+            boxes = np.zeros((num_objs, 4), dtype=np.uint16)
+            gt_classes = np.zeros((num_objs), dtype=np.int32)
+            overlaps = np.zeros((num_objs, self.num_classes), dtype=np.float32)
+            for ix, bbox in enumerate(objs):
+                x1, y1, x2, y2 = bbox
+                cls = 1 # cuz there is only cat
+                boxes[ix, :] = [x1, y1, x2, y2]
+                gt_classes[ix] = cls
+                overlaps[ix, cls] = 1.0
+            roi_rec.update({'boxes': boxes,
+                            'gt_classes': gt_classes,
+                            'gt_overlaps': overlaps,
+                            'max_classes': overlaps.argmax(axis=1),
+                            'max_overlaps': overlaps.max(axis=1),
+                            'flipped': False})
+            return roi_rec
+
+        cache_file = os.path.join(self.data_path, "annotaion.json")
+        gt = json.load(cache_file)
+        gt_roidb = [load_roi(index, gt) for index in self.image_set_index]
+        return gt_roidb
+
+
+
 if __name__ == "__main__":
     cat = Cat("Cat", "rcnn/dataset/cat/", "rcnn/dataset/cat/")
     catlist = cat.load_image_set_index()
     for idx in catlist:
         cat.image_path_from_index(idx)
         print idx
+    print "Done with image reading"
+
+    roidb = cat.gt_roidb()
+
+    print roidb
+    print "Done with roidb"
