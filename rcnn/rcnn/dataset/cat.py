@@ -48,6 +48,19 @@ class Cat(IMDB):
         
         return image_set_index
 
+    def image_path_from_index(self, index):
+        """
+        given image index, find out full path
+        :param index: index of a specific image
+        :return: full path of this image
+        """
+        image_file = os.path.join(self.data_path, index + '.jpg')
+        assert os.path.exists(image_file), 'Path does not exist: {}'.format(image_file)
+        return image_file
+
 if __name__ == "__main__":
     cat = Cat("Cat", "rcnn/dataset/cat/", "rcnn/dataset/cat/")
-    print cat
+    catlist = cat.load_image_set_index()
+    for idx in catlist:
+        cat.image_path_from_index(idx)
+        print idx
