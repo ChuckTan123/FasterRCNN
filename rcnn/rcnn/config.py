@@ -109,8 +109,8 @@ config.TEST.NMS = 0.3
 default = edict()
 
 # default network
-default.network = 'vgg'
-default.pretrained = 'model/vgg16'
+default.network = 'resnet'
+default.pretrained = 'model/resnet'
 default.pretrained_epoch = 0
 default.base_lr = 0.001
 # default dataset
