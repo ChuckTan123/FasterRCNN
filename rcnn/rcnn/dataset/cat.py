@@ -88,8 +88,10 @@ class Cat(IMDB):
                             'flipped': False})
             return roi_rec
 
-        cache_file = os.path.join(self.data_path, "annotaion.json")
-        gt = json.load(cache_file)
+        cache_file = os.path.join(self.data_path, "annotation.json")
+        assert os.path.exists(cache_file), "wrong GT path"
+        with open(cache_file, "r") as f:
+            gt = json.load(f)
         gt_roidb = [load_roi(index, gt) for index in self.image_set_index]
         return gt_roidb
 
@@ -100,7 +102,7 @@ if __name__ == "__main__":
     catlist = cat.load_image_set_index()
     for idx in catlist:
         cat.image_path_from_index(idx)
-        print idx
+        # print idx
     print "Done with image reading"
 
     roidb = cat.gt_roidb()
