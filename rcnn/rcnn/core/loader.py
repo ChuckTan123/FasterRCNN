@@ -20,9 +20,9 @@ import numpy as np
 from mxnet.executor_manager import _split_input_slice
 
 from rcnn.config import config
-from rcnn.io.image import tensor_vstack
-from rcnn.io.rpn import get_rpn_testbatch, get_rpn_batch, assign_anchor
-from rcnn.io.rcnn import get_rcnn_testbatch, get_rcnn_batch
+from rcnn.iorpn.image import tensor_vstack
+from rcnn.iorpn.rpn import get_rpn_testbatch, get_rpn_batch, assign_anchor
+from rcnn.iorpn.rcnn import get_rcnn_testbatch, get_rcnn_batch
 
 
 class TestLoader(mx.io.DataIter):

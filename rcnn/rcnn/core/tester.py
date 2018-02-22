@@ -28,7 +28,7 @@ from builtins import range
 from .module import MutableModule
 from rcnn.logger import logger
 from rcnn.config import config
-from rcnn.io import image
+from rcnn.iorpn import image
 from rcnn.processing.bbox_transform import bbox_pred, clip_boxes
 from rcnn.processing.nms import py_nms_wrapper, cpu_nms_wrapper, gpu_nms_wrapper
 
