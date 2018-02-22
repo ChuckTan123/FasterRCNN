@@ -104,8 +104,5 @@ if __name__ == "__main__":
         cat.image_path_from_index(idx)
         # print idx
     print "Done with image reading"
-
     roidb = cat.gt_roidb()
-
-    print roidb
     print "Done with roidb"
