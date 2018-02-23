@@ -17,16 +17,17 @@
 
 import argparse
 import pprint
-import mxnet as mx
+
 import numpy as np
 
-from rcnn.logger import logger
-from rcnn.config import config, default, generate_config
-from rcnn.symbol import *
+from rcnn.config import default, generate_config
 from rcnn.core import callback, metric
 from rcnn.core.loader import AnchorLoader
 from rcnn.core.module import MutableModule
-from rcnn.utils.load_data import load_gt_roidb, merge_roidb, filter_roidb
+from rcnn.dataset.cat import Cat
+from rcnn.logger import logger
+from rcnn.symbol import *
+from rcnn.utils.load_data import filter_roidb
 from rcnn.utils.load_model import load_param
 
 
@@ -50,14 +51,13 @@ def train_net(args, ctx, pretrained, epoch, prefix, begin_epoch, end_epoch,
     logger.info(pprint.pformat(config))
 
     # load dataset and prepare imdb for training
-    image_sets = [iset for iset in args.image_set.split('+')]
-    roidbs = [load_gt_roidb(args.dataset, image_set, args.root_path, args.dataset_path,
-                            flip=not args.no_flip)
-              for image_set in image_sets]
-    roidb = merge_roidb(roidbs)
+    # if cats 
+    imdb = Cat("Cat", "dataset/cat_full/", "dataset/cat_full/")
+    roidb = imdb.gt_roidb()
     roidb = filter_roidb(roidb)
-
+    
     # load training data
+    
     train_data = AnchorLoader(feat_sym, roidb, batch_size=input_batch_size, shuffle=not args.no_shuffle,
                               ctx=ctx, work_load_list=args.work_load_list,
                               feat_stride=config.RPN_FEAT_STRIDE, anchor_scales=config.ANCHOR_SCALES,
