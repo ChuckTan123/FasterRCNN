@@ -51,18 +51,18 @@ def train_net(args, ctx, pretrained, epoch, prefix, begin_epoch, end_epoch,
 
     # load dataset and prepare imdb for training
     # if cats 
-#     imdb = Cat("Cat", "rcnn/dataset/cat/", "rcnn/dataset/cat/")
-#     roidb = imdb.gt_roidb()
-#     roidb = filter_roidb(roidb)
+    imdb = Cat("Cat", "rcnn/dataset/cat_small/", "rcnn/dataset/cat_small/")
+    roidb = imdb.gt_roidb()
+    roidb = filter_roidb(roidb)
 
     #if voc 
     # load dataset and prepare imdb for training
-    image_sets = [iset for iset in args.image_set.split('+')]
-    roidbs = [load_gt_roidb(args.dataset, image_set, args.root_path, args.dataset_path,
-                            flip=not args.no_flip)
-              for image_set in image_sets]
-    roidb = merge_roidb(roidbs)
-    roidb = filter_roidb(roidb)
+#     image_sets = [iset for iset in args.image_set.split('+')]
+#     roidbs = [load_gt_roidb(args.dataset, image_set, args.root_path, args.dataset_path,
+#                             flip=not args.no_flip)
+#               for image_set in image_sets]
+#     roidb = merge_roidb(roidbs)
+#     roidb = filter_roidb(roidb)
     
     # load training data
     
