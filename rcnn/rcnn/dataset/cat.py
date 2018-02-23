@@ -75,7 +75,7 @@ class Cat(IMDB):
             gt_classes = np.zeros((num_objs), dtype=np.int32)
             overlaps = np.zeros((num_objs, self.num_classes), dtype=np.float32)
             for ix, bbox in enumerate(objs):
-                x1, y1, x2, y2 = bbox
+                x2, y2, x1, y1 = bbox
                 cls = 1 # cuz there is only cat
                 boxes[ix, :] = [x1, y1, x2, y2]
                 gt_classes[ix] = cls
