@@ -30,11 +30,7 @@ from rcnn.processing.nms import py_nms_wrapper, cpu_nms_wrapper, gpu_nms_wrapper
 
 
 CLASSES = ('__background__',
-           'aeroplane', 'bicycle', 'bird', 'boat',
-           'bottle', 'bus', 'car', 'cat', 'chair',
-           'cow', 'diningtable', 'dog', 'horse',
-           'motorbike', 'person', 'pottedplant',
-           'sheep', 'sofa', 'train', 'tvmonitor')
+           'cat')
 config.TEST.HAS_RPN = True
 SHORT_SIDE = config.SCALES[0][0]
 LONG_SIDE = config.SCALES[0][1]
